@@ -10,6 +10,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,10 +32,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.os.Vibrator;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    Vibrator v;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
     private WordViewModel mWordViewModel;
@@ -57,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // permission for message
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS}, PackageManager.PERMISSION_GRANTED);
+
+
+
         // ShakeDetector initialization
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager
@@ -101,8 +108,9 @@ public class MainActivity extends AppCompatActivity {
                 s0 = wordList.get(i).getWord();
                 makePhoneCall(s0);
                 Log.d("ajeet", "onClick: " + s0);
-
-
+                sendSMSMessage(s0);
+              Vibrator  vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(1000);
             }
         });
 
@@ -141,8 +149,9 @@ public class MainActivity extends AppCompatActivity {
                 s0 = wordList.get(i).getWord();
 
                 Log.d("ajeet", "onClick: " + s0);
-                handleShakeEvent(count);
+//                handleShakeEvent(count);
                 makePhoneCall(s0);
+                sendSMSMessage(s0);
             }
 
         });
@@ -182,6 +191,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    protected void sendSMSMessage(String number) {
+
+        SmsManager mySmsManager = SmsManager.getDefault();
+        mySmsManager.sendTextMessage(number,null, "PLEASE HELP ME IM IN DANGER.", null, null);
+        Toast.makeText(this, "message sent", Toast.LENGTH_SHORT).show();
+    }
         @Override
         public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
             if (requestCode == REQUEST_CALL) {
