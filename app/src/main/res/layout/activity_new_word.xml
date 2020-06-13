@@ -17,7 +17,8 @@ limitations under the License. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background">
 
     <EditText
         android:id="@+id/edit_word"
@@ -25,7 +26,7 @@ limitations under the License. -->
         android:layout_height="wrap_content"
         android:minHeight="@dimen/min_height"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/hint_word"
+        android:hint="Enter Contact No.."
         android:inputType="textAutoComplete"
         android:layout_margin="@dimen/big_padding"
         android:textSize="18sp" />
@@ -38,5 +39,10 @@ limitations under the License. -->
         android:text="@string/button_save"
         android:layout_margin="@dimen/big_padding"
         android:textColor="@color/buttonLabel" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="412dp"
+        android:background="@drawable/w" />
 
 </LinearLayout>

@@ -103,14 +103,26 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Random randomnumbergenerator1 = new Random();
-                i = randomnumbergenerator1.nextInt(3);
-                s0 = wordList.get(i).getWord();
-                makePhoneCall(s0);
-                Log.d("ajeet", "onClick: " + s0);
-                sendSMSMessage(s0);
-              Vibrator  vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(1000);
+
+                if(wordList.size()!= 0 ) {
+                    if(wordList.size() <3){
+                        Toast.makeText(MainActivity.this,
+                                "Please Enter Altleat Three Contacts" , Toast.LENGTH_LONG).show();
+                    }else {
+                        Random randomnumbergenerator1 = new Random();
+                        i = randomnumbergenerator1.nextInt(3);
+
+                        s0 = wordList.get(i).getWord();
+                        makePhoneCall(s0);
+                        Log.d("ajeet", "onClick: " + s0);
+                        sendSMSMessage(s0);
+                        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                        vibrator.vibrate(1000);
+                    }
+                }else {
+                    Toast.makeText(MainActivity.this,
+                            "Please Enter Three Contacts" , Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -119,9 +131,14 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(MainActivity.this, NewWordActivity.class);
-                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+              if(wordList.size() > 3)
+              {
+                  Toast.makeText(MainActivity.this,
+                          "Trying to add more then three contacts" , Toast.LENGTH_LONG).show();
+              }else {
+                  Intent intent = new Intent(MainActivity.this, NewWordActivity.class);
+                  startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+              }
             }
         });
         // Delete Floating action button
@@ -130,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 mWordViewModel.delete();
+                wordList.clear();
 
             }
         });
@@ -144,14 +162,25 @@ public class MainActivity extends AppCompatActivity {
                  * method you would use to setup whatever you want done once the
                  * device has been shook.
                  */
-                Random randomnumbergenerator1 = new Random();
-                i = randomnumbergenerator1.nextInt(3);
-                s0 = wordList.get(i).getWord();
+                if(wordList.size()!= 0 ) {
+                    if(wordList.size() <3){
+                        Toast.makeText(MainActivity.this,
+                                "Please Enter Altleat Three Contacts" , Toast.LENGTH_LONG).show();
+                    }else {
+                        Random randomnumbergenerator1 = new Random();
+                        i = randomnumbergenerator1.nextInt(3);
 
-                Log.d("ajeet", "onClick: " + s0);
-//                handleShakeEvent(count);
-                makePhoneCall(s0);
-                sendSMSMessage(s0);
+                        s0 = wordList.get(i).getWord();
+                        makePhoneCall(s0);
+                        Log.d("ajeet", "onClick: " + s0);
+                        sendSMSMessage(s0);
+                        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                        vibrator.vibrate(1000);
+                    }
+                }else {
+                    Toast.makeText(MainActivity.this,
+                            "Please Enter Three Contacts" , Toast.LENGTH_LONG).show();
+                }
             }
 
         });

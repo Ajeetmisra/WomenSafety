@@ -10,6 +10,15 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
+    }
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Ajeet Mishra\\Desktop\\AndroidApps\\android-room-with-a-view-master\\app\\my-release-key.keystore')
+            storePassword '007007ajeet'
+            keyAlias 'my-key-alias'
+            keyPassword '007007ajeet'
+        }
     }
     buildTypes {
         release {
